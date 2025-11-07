@@ -114,6 +114,7 @@ export class AuthService {
   // eslint-disable-next-line @typescript-eslint/require-await
   async logout(res: Response) {
     this.setCookie(res, 'refreshToken', new Date(0));
+    return true;
   }
 
   async validate(id: string) {
