@@ -10,6 +10,7 @@ export const Authorized = createParamDecorator(
     const gqlContext: GraphQLContext = ctx.getContext();
 
     const user = gqlContext.req.user as User;
+
     return data ? user[data] : user;
   },
 );
