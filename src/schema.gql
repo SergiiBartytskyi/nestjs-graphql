@@ -13,7 +13,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 input LoginInput {
+  """The email address of the user"""
   email: String!
+
+  """The password of the user"""
   password: String!
 }
 
@@ -25,22 +28,39 @@ type Mutation {
 }
 
 type Query {
+  """Get all users (Admin only)"""
+  getAllUsers: [UserModel!]!
+
+  """Get the currently authenticated user"""
   getMe: UserModel!
-  getUsers: [UserModel!]!
 }
 
 input RegisterInput {
+  """The email address of the user"""
   email: String!
+
+  """The name of the user"""
   name: String!
+
+  """The password of the user"""
   password: String!
 }
 
+"""User model representing a user in the system"""
 type UserModel {
   createdAt: DateTime!
+
+  """The email address of the user"""
   email: String!
   id: ID!
+
+  """The name of the user"""
   name: String
+
+  """The hashed password of the user"""
   password: String!
+
+  """The role of the user in the system"""
   role: UserRole!
   updatedAt: DateTime!
 }

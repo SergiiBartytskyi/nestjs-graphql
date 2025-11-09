@@ -3,20 +3,27 @@ import { UserService } from './user.service';
 import { UserModel } from './models/user.model';
 import { Authorization } from 'src/auth/decorators/authorization.decorator';
 import { Authorized } from 'src/auth/decorators/authorized.decorator';
-import type { User } from '@prisma/client';
+import { UserRole, type User } from '@prisma/client';
 
 @Resolver()
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Authorization()
-  @Query(() => UserModel)
+  @Query(() => UserModel, {
+    name: 'getMe',
+    description: 'Get the currently authenticated user',
+  })
   getMe(@Authorized() user: User) {
     return user;
   }
 
-  @Query(() => [UserModel])
-  getUsers() {
-    return this.userService.findAll();
+  @Authorization(UserRole.ADMIN)
+  @Query(() => [UserModel], {
+    name: 'getAllUsers',
+    description: 'Get all users (Admin only)',
+  })
+  async getUsers() {
+    return await this.userService.findAll();
   }
 }

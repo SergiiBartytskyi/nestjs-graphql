@@ -3,13 +3,13 @@ import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
 @InputType()
 export class RegisterInput {
-  @Field(() => String)
+  @Field(() => String, { description: 'The email address of the user' })
   @IsString()
   @IsNotEmpty({ message: 'Email must not be empty' })
   @IsEmail({}, { message: 'Email must be a valid email address' })
   email: string;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'The password of the user' })
   @IsString({ message: 'Password must be a string' })
   @IsNotEmpty({ message: 'Password must not be empty' })
   @Length(6, 32, {
@@ -17,8 +17,8 @@ export class RegisterInput {
   })
   password: string;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'The name of the user' })
   @IsString({ message: 'Name must be a string' })
-  @IsNotEmpty({ message: 'Name must not be empty' })
+  // @IsNotEmpty({ message: 'Name must not be empty' })
   name: string;
 }
